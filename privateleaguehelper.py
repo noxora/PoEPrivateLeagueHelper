@@ -8,6 +8,7 @@ from config import (
     intro_schpeal,
 )
 from discord.ext import commands
+import os
 
 description = """
 A bot to help in the management of path of exile private leagues"""
@@ -132,7 +133,7 @@ async def handle_help(message):
 
 
 async def handle_example(message):
-    image_file = open("PrivateLeagueHelper\example_image.PNG", "rb")
+    image_file = open(f"PrivateLeagueHelper{os.path.sep}example_image.PNG", "rb")
     discord_file = discord.File(image_file)
     await message.author.send(
         "This is an example before image, an example after image should be the same but with the crowdfund bar increased by at least 10 points and your account's points decreased by 10 points",
