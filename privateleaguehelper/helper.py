@@ -1,12 +1,12 @@
 import discord
-from config import (
+from privateleaguehelper.config import (
     bot_token,
     command_center,
     new_user_channel,
     help_channel,
     audit_channel,
 )
-from schpeal import (
+from privateleaguehelper.schpeal import (
     schpeal_intro,
     schpeal_crowdfund,
     schpeal_unknown,
@@ -99,6 +99,7 @@ async def on_message(message):
 
     if m.startswith("!"):
         await message.author.send(error_typo)
+        return
 
     # We got here because we don't know what they said
     await message.author.send(schpeal_unknown)
@@ -185,4 +186,5 @@ async def join(ctx):
     await ctx.message.author.send(schpeal_intro)
 
 
-bot.run(bot_token)
+def start():
+    bot.run(bot_token)

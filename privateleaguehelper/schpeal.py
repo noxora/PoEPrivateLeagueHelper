@@ -4,15 +4,15 @@ schpeal_intro = f"""
 Hello! I'm Private league helper here to help you get into a private league.
 The current league is set to: {current_league}
 The link to the current league is: {league_link}
-The current requested donation to skip the line is a minimum of 10 points, but more than 10 is always appreciated if you're able
+The current donation required to skip the line is a minimum of 10 points, but more than 10 is always appreciated if you're able
 
 If you would like to **get in line** for entry, please **follow the link** to the league and **apply at the top** of the page
 
-If you are able to **contribute 10 points** to the crowdfund, and would like to **skip the line**, reply with ```!crowdfund```
+If you would like to **skip the line** which **requires a crowdfund donation of 10 points**, reply with ```!crowdfund```
 If you need help, or have questions, reply with ```!help``` so that I can ask a mod to message you on discord. You must be in the racing discord for a mod to find you!
 """
 schpeal_unknown = "Hello! I didn't see a command in your message, if you would like instructions, please respond with ```!intro```"
-schpeal_crowdfund = """If you are able to **contribute 10 points** to the crowdfund, please follow these steps to skip the line
+schpeal_crowdfund = """If you are able to **at least contribute 10 points** to the crowdfund, please follow these steps to skip the line
 
 **1.** Please apply to the league at the link above
 
