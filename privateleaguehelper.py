@@ -7,11 +7,13 @@ from config import (
     audit_channel,
 )
 from schpeal import (
-    intro_schpeal,
+    schpeal_intro,
+    schpeal_crowdfund,
+    schpeal_unknown,
     error_no_username,
     error_no_image,
     error_not_image,
-    unknown_schpeal,
+    error_typo,
     confirmation_registered,
     confirmation_admitted,
     confirmation_help,
@@ -62,6 +64,10 @@ async def on_message(message):
         await handle_example(message)
         return
 
+    if "!crowdfund" in message.content:
+        await handle_crowdfund(message)
+        return
+
     m = message.content
     message_has_account_name = False
     accountname = None
@@ -91,8 +97,11 @@ async def on_message(message):
             await handle_proof(message, accountname)
             return
 
+    if m.startswith("!"):
+        await message.author.send(error_typo)
+
     # We got here because we don't know what they said
-    await message.author.send(unknown_schpeal)
+    await message.author.send(schpeal_unknown)
 
 
 async def handle_register(message, accountname):
@@ -139,7 +148,11 @@ async def handle_example(message):
 
 
 async def handle_intro(message):
-    await message.author.send(intro_schpeal)
+    await message.author.send(schpeal_intro)
+
+
+async def handle_crowdfund(message):
+    await message.author.send(schpeal_crowdfund)
 
 
 # TODO: Change this to on_raw_reaction_add
@@ -169,7 +182,7 @@ async def on_reaction_add(reaction, user):
 @bot.command()
 async def join(ctx):
     """Allows a user to start the process of joining the league"""
-    await ctx.message.author.send(intro_schpeal)
+    await ctx.message.author.send(schpeal_intro)
 
 
 bot.run(bot_token)
