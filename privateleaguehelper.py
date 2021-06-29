@@ -5,7 +5,18 @@ from config import (
     new_user_channel,
     help_channel,
     audit_channel,
+)
+from schpeal import (
     intro_schpeal,
+    error_no_username,
+    error_no_image,
+    error_not_image,
+    unknown_schpeal,
+    confirmation_registered,
+    confirmation_admitted,
+    confirmation_help,
+    confirmation_proof,
+    example_proof,
 )
 from discord.ext import commands
 import os
@@ -61,15 +72,8 @@ async def on_message(message):
     # These two are grouped because of common validation steps
     if "!register" in m or "!proof" in m:
         # Validate account name
-        if not message_has_account_name:
-            await message.author.send(
-                "Sorry, I'll need an account name for that, please try again"
-            )
-            return
-        if not accountname:
-            await message.author.send(
-                "Sorry, I don't see an account name, please try again"
-            )
+        if not message_has_account_name or not accountname:
+            await message.author.send(error_no_username)
             return
         # Handle Register
         if "!register" in m:
@@ -79,21 +83,16 @@ async def on_message(message):
         if "!proof" in m:
             # Validate attachments
             if not message.attachments:
-                await message.author.send(
-                    "I don't see any images in that message, please try again"
-                )
+                await message.author.send(error_no_image)
                 return
             for att in message.attachments:
                 if not att.content_type or not "image" in att.content_type:
-                    await message.author.send(
-                        "I see that you've sent files, but they don't appear to be images, please try again"
-                    )
+                    await message.author.send(error_not_image)
             await handle_proof(message, accountname)
             return
 
-    await message.author.send(
-        "Hello! I didn't see a command in your message, if you would like instructions, please respond with ```!intro```"
-    )
+    # We got here because we don't know what they said
+    await message.author.send(unknown_schpeal)
 
 
 async def handle_register(message, accountname):
@@ -105,9 +104,7 @@ async def handle_register(message, accountname):
     await bot.get_guild(command_center).get_channel(audit_channel).send(
         f"Discord user {message.author.name}#{message.author.discriminator} with uid {message.author.id} and PoE account name ```{accountname}```has started the registration process"
     )
-    await message.author.send(
-        f"I've forwarded your request for entry, I'll let you know when a moderator tells me you've been added!"
-    )
+    await message.author.send(confirmation_registered)
 
 
 async def handle_proof(message, accountname):
@@ -120,25 +117,24 @@ async def handle_proof(message, accountname):
         f"Discord user {message.author.name}#{message.author.discriminator} with uid {message.author.id} and PoE account name ```{accountname}``` has submitted a proof image",
         files=ifiles,
     )
-    await message.author.send("Your proof has been successfully submitted, thank you!")
+    await message.author.send(confirmation_proof)
 
 
 async def handle_help(message):
     await bot.get_guild(command_center).get_channel(help_channel).send(
         f"Discord user {message.author.name}#{message.author.discriminator} is requesting help!"
     )
-    await message.author.send(
-        "I've forwarded your request for help, a mod will reach out to you as soon as they can!"
-    )
+    await message.author.send(confirmation_help)
 
 
 async def handle_example(message):
     image_file = open(f"PrivateLeagueHelper{os.path.sep}example_image.PNG", "rb")
     discord_file = discord.File(image_file)
     await message.author.send(
-        "This is an example before image, an example after image should be the same but with the crowdfund bar increased by at least 10 points and your account's points decreased by 10 points",
+        example_proof,
         file=discord_file,
     )
+    # Discord.py should override this method, but call it anyway
     image_file.close()
 
 
@@ -159,9 +155,7 @@ async def on_reaction_add(reaction, user):
     if reaction.message.channel.id == new_user_channel:
         if emoj == "👍":
             discord_id = reaction.message.content.split("<")[1].split(">")[0]
-            await bot.get_user(int(discord_id)).send(
-                "A Moderator has indicated that they've added you to the league!\nGood luck and have fun!\nPlease remember to submit proof as soon as you can"
-            )
+            await bot.get_user(int(discord_id)).send(confirmation_admitted)
             reactors = await reaction.users().flatten()
             if len(reactors) < 1:  # This shouldn't happen
                 await bot.get_guild(command_center).get_channel(audit_channel).send(
