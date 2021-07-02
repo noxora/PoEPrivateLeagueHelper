@@ -9,7 +9,8 @@ The current donation required to skip the line is a minimum of 10 points, but mo
 If you would like to **get in line** for entry, please **follow the link** to the league and **apply at the top** of the page
 
 If you would like to **skip the line** which **requires a crowdfund donation of 10 points**, reply with ```!crowdfund```
-If you need help, or have questions, reply with ```!help``` so that I can ask a mod to message you on discord. You must be in the racing discord for a mod to find you!
+If you have a **quick question**, reply with ```!faq```
+If you need help, or still have questions, reply with ```!help``` so that I can ask a mod to message you on discord. You must be in the racing discord for a mod to find you!
 """
 schpeal_unknown = "Hello! I didn't see a command in your message, if you would like instructions, please respond with ```!intro```"
 schpeal_crowdfund = """If you are able to **at least contribute 10 points** to the crowdfund, please follow these steps to skip the line
@@ -25,6 +26,14 @@ Once you've been added, a fund button will appear at the top of the league and y
 When you send them to me, please include the text ```!proof <my-account-name>```in any message which has a picture of proof
 
 If you would like an **example proof image**, please reply with ```!example```
+"""
+schpeal_faq = """**Why are there still spots available in the league? Why not fill the league up all of the way?** 
+By holding about 12 spots, we are able to guarantee that crowdfunders are let in when they crowdfund. This leads to more crowdfunding and more people overall getting in
+
+**Why 10 points and not 6 or 12?**
+6 or 12 points would be to pay for the crowdfunder's spot or their spot + 1
+We wanted to make it more than 6 points so that crowdfunders are paying for at least a little more than their own spot
+We decided to go with 10 points because it allows people to buy the minimum 50 points, and gain entry to 5 leagues cleanly.
 """
 
 error_no_username = "Sorry, I'll need an account name for that. Please make sure your account name is between < and > "

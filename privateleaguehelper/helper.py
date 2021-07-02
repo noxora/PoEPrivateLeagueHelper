@@ -10,6 +10,7 @@ from privateleaguehelper.schpeal import (
     schpeal_intro,
     schpeal_crowdfund,
     schpeal_unknown,
+    schpeal_faq,
     error_no_username,
     error_no_image,
     error_not_image,
@@ -66,6 +67,10 @@ async def on_message(message):
 
     if "!crowdfund" in message.content:
         await handle_crowdfund(message)
+        return
+
+    if "!faq" in message.content:
+        await handle_faq(message)
         return
 
     m = message.content
@@ -154,6 +159,10 @@ async def handle_intro(message):
 
 async def handle_crowdfund(message):
     await message.author.send(schpeal_crowdfund)
+
+
+async def handle_faq(message):
+    await message.author.send(schpeal_faq)
 
 
 # TODO: Change this to on_raw_reaction_add
